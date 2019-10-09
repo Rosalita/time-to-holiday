@@ -1,0 +1,35 @@
+{
+  "expo": {
+    "name": "Time to Holiday",
+    "slug": "time-to-holiday",
+    "privacy": "public",
+    "sdkVersion": "34.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "dev.rosie.timetoholiday"
+    },
+    "description": "Time to holiday shows a countdown until my holiday",
+    "githubUrl": "https://github.com/Rosalita/time-to-holiday"
+  }
+}
