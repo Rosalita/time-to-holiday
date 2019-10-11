@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, Image, View, Button } from 'react-native';
 import CountDown from 'react-native-countdown-component';
 import moment from 'moment';
 
@@ -9,6 +9,29 @@ let SKYBLUE = '#6ACFC9';
 const OCEANBLUE = '#26B6C6';
 const DEEPBLUE = '#3C2F80';
 
+const poem1 = {
+  line1: 'Roses are red',
+  line2: 'This app is blue',
+  line3: 'Not long now until',
+  line4: 'Fuertaventura with you',
+};
+
+const poem2 = {
+  line1: 'Holiday starts now!',
+  line2: 'Our adventure has begun',
+  line3: 'Lets make some memories',
+  line4: 'And have loads of fun',
+};
+
+const Poetry = props => (
+  <View style={styles.poemContainer}>
+    <Text style={styles.poemText}>{props.line1}</Text>
+    <Text style={styles.poemText}>{props.line2}</Text>
+    <Text style={styles.poemText}>{props.line3}</Text>
+    <Text style={styles.poemText}>{props.line4}</Text>
+  </View>
+);
+
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -16,16 +39,16 @@ export default class App extends React.Component {
     this.state = {
       secondsRemaining: 0,
       holidayStarted: false,
-      textLine1: 'Roses are red',
-      textLine2: 'This app is blue',
-      textLine3: 'Not long now until',
-      textLine4: 'Fuertaventura with you',
+      poem: poem1,
     };
   }
 
   componentDidMount() {
     let dateTimeNow = moment().format('ddd, DD MMM YYYY HH:mm:ss ZZ');
-    const holidayTime = moment("Sat, 14 Dec 2019 13:25:00 UTC", "ddd, DD MMM YYYY HH:mm:ss ZZ");
+    const holidayTime = moment(
+      'Sat, 14 Dec 2019 13:25:00 UTC',
+      'ddd, DD MMM YYYY HH:mm:ss ZZ'
+    );
     let difference = moment.duration(
       moment(holidayTime).diff(moment(dateTimeNow))
     );
@@ -44,20 +67,14 @@ export default class App extends React.Component {
 
   holidayStarted = () => {
     this.setState(() => ({ holidayStarted: true }));
-    this.setState(() => ({ textLine1: 'Holiday starts now!' }));
-    this.setState(() => ({ textLine2: 'Our adventure has begun' }));
-    this.setState(() => ({ textLine3: 'Lets make some memories' }));
-    this.setState(() => ({ textLine4: 'And have loads of fun' }));
+    this.setState(() => ({ poem: poem2 }));
   };
 
   render() {
-    if (this.state.holidayStarted === false) {
-      return (
-        <View style={styles.appContainer}>
-          <Text style={styles.titleText}>{this.state.textLine1}</Text>
-          <Text style={styles.titleText}>{this.state.textLine2}</Text>
-          <Text style={styles.titleText}>{this.state.textLine3}</Text>
-          <Text style={styles.titleText}>{this.state.textLine4}</Text>
+    return (
+      <View style={styles.appContainer}>
+        <Poetry {...this.state.poem} />
+        {!this.state.holidayStarted && (
           <CountDown
             digitStyle={styles.countDownDigit}
             digitTxtStyle={styles.countDownText}
@@ -68,18 +85,13 @@ export default class App extends React.Component {
             onFinish={this.holidayStarted}
             size={25}
           />
-        </View>
-      );
-    } else {
-      return (
-        <View style={styles.appContainer}>
-          <Text style={styles.titleText}>{this.state.textLine1}</Text>
-          <Text style={styles.titleText}>{this.state.textLine2}</Text>
-          <Text style={styles.titleText}>{this.state.textLine3}</Text>
-          <Text style={styles.titleText}>{this.state.textLine4}</Text>
-        </View>
-      );
-    }
+        )}
+        <Image
+          style={{width: 250, height: 250, marginTop: 20}}
+          source={require('./assets/resort.png')}
+        />
+      </View>
+    );
   }
 }
 
@@ -90,9 +102,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  titleText: {
+  poemContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  poemText: {
     fontSize: 24,
-    fontWeight: "200",
+    fontWeight: '200',
     color: DEEPBLUE,
     marginBottom: 10,
     textShadowColor: SAND,
@@ -112,7 +128,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     color: DEEPBLUE,
     fontSize: 12,
-    fontWeight: "100",
+    fontWeight: '100',
     textShadowColor: SAND,
     textShadowRadius: 18,
     textShadowOffset: { width: 2, height: 2 },
